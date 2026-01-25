@@ -67,3 +67,6 @@ const InitalizeConnection = async () => {
 
 InitalizeConnection();
 
+app.get("/", (req, res) => {
+  res.send("Code Spark Backend is running 🚀");
+});
