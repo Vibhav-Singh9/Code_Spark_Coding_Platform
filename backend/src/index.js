@@ -13,10 +13,24 @@ const cors = require('cors')
 
 // console.log("Hello")
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true 
-}))
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
     
 app.use(express.json());
 app.use(cookieParser());
@@ -67,6 +81,6 @@ const InitalizeConnection = async () => {
 
 InitalizeConnection();
 
-app.get("/", (req, res) => {
-  res.send("Code Spark Backend is running 🚀");
-});
+// app.get("/", (req, res) => {
+//   res.send("Code Spark Backend is running 🚀");
+// });
