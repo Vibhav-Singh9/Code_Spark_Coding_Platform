@@ -65,7 +65,7 @@ const InitalizeConnection = async () => {
 
     try {
       await redisClient.connect();
-      console.log("Redis Connected");
+      // console.log("Redis Connected");
     } catch (redisErr) {
       console.log("Redis connection failed, continuing without Redis");
     }
