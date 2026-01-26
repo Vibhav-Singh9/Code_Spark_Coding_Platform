@@ -60,22 +60,20 @@ app.use("/video",videoRouter);
 
 const InitalizeConnection = async () => {
   try {
-    await main(); // MongoDB
+    await main();
     console.log("MongoDB Connected");
 
-    try {
-      await redisClient.connect();
-      // console.log("Redis Connected");
-    } catch (redisErr) {
-      console.log("Redis connection failed, continuing without Redis");
-    }
-
-    app.listen(process.env.PORT, () => {
-      console.log("Server listening at port number: " + process.env.PORT);
+    app.listen(process.env.PORT || 5000, () => {
+      console.log("Server listening at port number: " + (process.env.PORT || 5000));
     });
 
+    // Redis must NEVER block startup
+    redisClient.connect()
+      .then(() => console.log("Redis Connected"))
+      .catch(err => console.log("Redis disabled:", err.message));
+
   } catch (err) {
-    console.log("Error: " + err);
+    console.log("Fatal error:", err);
   }
 };
 
