@@ -30,7 +30,9 @@ function Login() {
   }, [isAuthenticated, navigate]);
 
   const onSubmit = (data) => {
-    dispatch(loginUser(data));
+    dispatch(loginUser(data))
+  // .unwrap()
+  // .then(() => dispatch(checkAuth()));
   };
 
   return (

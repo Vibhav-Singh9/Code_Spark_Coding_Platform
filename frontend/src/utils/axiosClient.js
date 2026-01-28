@@ -1,15 +1,13 @@
-import axios from "axios"
+import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+const axiosClient = axios.create({
+  baseURL: "https://code-spark-backend.onrender.com",
+  // baseURL: "http://localhost:5000", for checking on localhost
 
-const axiosClient =  axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json'
-    }
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-
 export default axiosClient;
-

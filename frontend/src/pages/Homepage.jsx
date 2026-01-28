@@ -6,7 +6,7 @@ import { logoutUser } from '../authSlice';
 
 function Homepage() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [problems, setProblems] = useState([]);
   const [solvedProblems, setSolvedProblems] = useState([]);
   const [filters, setFilters] = useState({
@@ -38,10 +38,13 @@ function Homepage() {
     if (user) fetchSolvedProblems();
   }, [user]);
 
+
   const handleLogout = () => {
-    dispatch(logoutUser());
-    setSolvedProblems([]); // Clear solved problems on logout
-  };
+  dispatch(logoutUser());
+  setSolvedProblems([]);
+  setProblems([]);
+};
+
 
   const filteredProblems = problems.filter(problem => {
     const difficultyMatch = filters.difficulty === 'all' || problem.difficulty === filters.difficulty;
@@ -157,3 +160,34 @@ const getDifficultyBadgeColor = (difficulty) => {
 };
 
 export default Homepage;
+
+//   useEffect(() => {
+//   if (!isAuthenticated) return;
+
+//   const fetchProblems = async () => {
+//     try {
+//       const { data } = await axiosClient.get('/problem/getAllProblem');
+//       setProblems(data);
+//     } catch (error) {
+//       console.error('Error fetching problems:', error);
+//     }
+//   };
+
+//   const fetchSolvedProblems = async () => {
+//     try {
+//       const { data } = await axiosClient.get('/problem/problemSolvedByUser');
+//       setSolvedProblems(data);
+//     } catch (error) {
+//       console.error('Error fetching solved problems:', error);
+//     }
+//   };
+
+//   fetchProblems();
+//   fetchSolvedProblems();
+// }, [isAuthenticated]);
+
+
+  // const handleLogout = () => {
+  //   dispatch(logoutUser());
+  //   setSolvedProblems([]); // Clear solved problems on logout
+  // };
